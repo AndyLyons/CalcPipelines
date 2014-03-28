@@ -1,0 +1,12 @@
+{
+    "name" : "CalcPipeline",
+    "version" : "0.0.1",
+
+    "description" : "Manages calculations, triggering them in the correct order based on their dependencies",
+    "keywords" : ["calculation", "pipeline", "dependencies"],
+    "author" : "Andrew Lyons <calcpipeline@andrewlyons.co.uk> (http://www.andrewlyons.co.uk)",
+
+    "devDependencies" : {
+        "browserify" : "3.x.x"
+    }
+}

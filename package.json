@@ -8,5 +8,8 @@
 
     "devDependencies" : {
         "browserify" : "3.x.x"
-    }
+    },
+
+    "files" : ["lib"],
+    "main" : "lib/module.js"
 }

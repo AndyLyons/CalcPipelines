@@ -3,6 +3,17 @@ PipelinesJS
 
 Manages function execution pipelines, triggering them in the correct order based on their dependencies
 
+Running Tests
+-------
+
+```
+npm install -g mocha
+```
+
+Run `mocha` in the root directory
+
+
+
 Notes
 -----
 

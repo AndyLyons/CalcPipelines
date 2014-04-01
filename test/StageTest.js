@@ -61,4 +61,22 @@ describe('Stage', function() {
 
     });
 
+    describe('#dependsOn', function() {
+
+        it('returns true if the dependency ID is in the list of dependencies passed in to the constructor', function() {
+            var stage = new Stage(null, ["Test"], null);
+            var dependsOnTest = stage.dependsOn("Test");
+
+            assert(dependsOnTest);
+        });
+
+        it('returns false if the dependency ID is not in the list of dependencies passed in to the constructor', function() {
+            var stage = new Stage(null, ["Test"], null);
+            var dependsOnTest = stage.dependsOn("Foo");
+
+            assert(!dependsOnTest);
+        });
+
+    });
+
 });

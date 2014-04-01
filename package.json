@@ -7,7 +7,7 @@
     "author" : "Andrew Lyons <pipelines@andrewlyons.co.uk> (http://www.andrewlyons.co.uk)",
 
     "devDependencies" : {
-        "browserify" : "3.x.x"
+        "browserify" : "3"
     },
 
     "files" : ["lib"],

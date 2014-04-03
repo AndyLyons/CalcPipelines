@@ -1,5 +1,7 @@
+var sinon = require("sinon");
 var assert = require("assert");
 var DependencyManager = require("../lib/DependencyManager");
+var DependencyTranslator = require("../lib/DependencyTranslator");
 
 describe('DependencyManager', function() {
     var dependencyManager;
@@ -94,6 +96,36 @@ describe('DependencyManager', function() {
             }
 
             assert.throws(throwsError, messageContainsDuplicatedIds, "The error message did not contain all duplicate IDs");
+        });
+
+    });
+
+    describe('#setDependency', function() {
+
+        var translator1;
+        var translator2;
+
+        beforeEach(function() {
+            // DependencyTranslator is an interface so has no implementation, but we just want these
+            // to use as spies/stubs/mocks
+            translator1 = new DependencyTranslator();
+            translator2 = new DependencyTranslator();
+
+            dependencyManager.addDependencyTranslator(translator1, ["Test1"]);
+            dependencyManager.addDependencyTranslator(translator2, ["Test2", "Test3"]);
+            dependencyManager.addDependencyTranslator(translator1, ["Test4"]);
+        });
+
+        it('calls setDependency on the correct DependencyTranslator', function() {
+            sinon.spy(translator1, "setDependency");
+
+            dependencyManager.setDependency("Test1", "Foo");
+
+            assert(translator1.setDependency.calledWith("Test1", "Foo"));
+        });
+
+        it('', function() {
+
         });
 
     });

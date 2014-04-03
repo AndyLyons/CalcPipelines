@@ -3,17 +3,17 @@ var assert = require("assert");
 var Pipeline = require("../lib/Pipeline");
 
 describe('Pipeline', function() {
+    var pipeline;
+
+    beforeEach(function() {
+        pipeline = new Pipeline();
+    });
+
+    afterEach(function() {
+        pipeline = null;
+    });
 
     describe('#getStages', function () {
-        var pipeline;
-
-        beforeEach(function() {
-            pipeline = new Pipeline();
-        });
-
-        afterEach(function() {
-            pipeline = null;
-        });
 
         it('returns a single stage when only one has been added', function() {
             pipeline.addStage(null, null);
@@ -56,6 +56,17 @@ describe('Pipeline', function() {
             stages[0].execute();
 
             sinon.assert.calledWith(execution, sinon.match.same(pipeline));
+        });
+
+    });
+
+    describe('#getDependencyManager', function() {
+
+        it('returns a DependencyManager object', function() {
+            var DependencyManager = require("../lib/DependencyManager");
+            var dependencyManager = pipeline.getDependencyManager();
+
+            assert(dependencyManager instanceof DependencyManager);
         });
 
     });

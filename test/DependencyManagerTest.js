@@ -100,8 +100,8 @@ describe('DependencyManager', function() {
 
     });
 
-    describe('#setDependency', function() {
-
+    describe('[DependencyTranslator proxy functions]', function() {
+        
         var translator1;
         var translator2;
 
@@ -116,18 +116,81 @@ describe('DependencyManager', function() {
             dependencyManager.addDependencyTranslator(translator1, ["Test4"]);
         });
 
-        it('calls setDependency on the correct DependencyTranslator', function() {
-            sinon.spy(translator1, "setDependency");
-
-            dependencyManager.setDependency("Test1", "Foo");
-
-            assert(translator1.setDependency.calledWith("Test1", "Foo"));
+        afterEach(function() {
+            translator1 = null;
+            translator2 = null;
         });
 
-        it('', function() {
+        describe('#setDependency', function() {
+
+            it('calls setDependency on the correct DependencyTranslator', function() {
+                sinon.spy(translator1, "setDependency");
+
+                dependencyManager.setDependency("Test1", "Foo");
+
+                sinon.assert.calledWith(translator1.setDependency, "Test1", "Foo");
+            });
+
+            it('calls setDependency on the correct DependencyTranslator when multiple are set', function() {
+                sinon.spy(translator2, "setDependency");
+
+                dependencyManager.setDependency("Test3", "Bar");
+
+                sinon.assert.calledWith(translator2.setDependency, "Test3", "Bar");
+            });
 
         });
 
+        describe('#getDependency', function() {
+
+            it('calls getDependency on the correct DependencyTranslator', function() {
+                sinon.spy(translator1, "getDependency");
+                
+                dependencyManager.getDependency("Test1");
+
+                sinon.assert.calledWith(translator1.getDependency, "Test1");
+            });
+
+            it('calls getDependency on the correct DependencyTranslator when multiple are set', function() {
+                sinon.spy(translator2, "getDependency");
+
+                dependencyManager.getDependency("Test3");
+
+                sinon.assert.calledWith(translator2.getDependency, "Test3");
+            });
+
+        });
+
+        describe('#getDependencies', function() {
+
+            it('calls getDependencies on the correct DependencyTranslator when only one dependency is requested', function() {
+                sinon.spy(translator1, "getDependencies");
+                
+                dependencyManager.getDependencies(["Test1"]);
+
+                sinon.assert.calledWith(translator1.getDependencies, ["Test1"]);
+            });
+
+            it('calls getDependencies on the correct DependencyTranslator when multiple are requested from the same one', function() {
+                sinon.spy(translator1, "getDependencies");
+
+                dependencyManager.getDependencies(["Test1", "Test4"]);
+
+                sinon.assert.calledWith(translator1.getDependencies, ["Test1", "Test4"]);
+            });
+
+            it('calls getDependencies on all the correct DependencyTranslators when multiple dependencies are requested from different ones', function() {
+                sinon.spy(translator1, "getDependencies");
+                sinon.spy(translator2, "getDependencies");
+
+                dependencyManager.getDependencies(["Test1", "Test2", "Test3", "Test4"]);
+
+                sinon.assert.calledWith(translator1.getDependencies, ["Test1", "Test4"]);
+                sinon.assert.calledWith(translator2.getDependencies, ["Test2", "Test3"]);
+            });
+
+        });
+    
     });
 
 });
